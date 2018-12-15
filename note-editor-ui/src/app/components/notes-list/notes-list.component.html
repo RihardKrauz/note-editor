@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let note of notes$ | async">
+    <app-note-card [model]="note"></app-note-card>
+  </li>
+</ul>
