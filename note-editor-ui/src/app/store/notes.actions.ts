@@ -6,7 +6,8 @@ export enum NotesActionTypes {
   Remove = '[Notes] Remove',
   Restore = '[Notes] Restore',
   Fetch = '[Notes] Fetch',
-  FetchSuccess = '[Notes] FetchSuccess'
+  FetchSuccess = '[Notes] FetchSuccess',
+  Sync = '[Notes] Sync'
 }
 
 export interface NoteAction<T> extends Action {
@@ -20,6 +21,10 @@ export class FetchNotes implements NoteAction<undefined> {
 export class FetchNotesSuccess implements NoteAction<Note[]> {
   readonly type = NotesActionTypes.FetchSuccess;
   constructor(public payload: Note[]) {}
+}
+
+export class SyncNotes implements NoteAction<undefined> {
+  readonly type = NotesActionTypes.Sync;
 }
 
 export class AddNote implements NoteAction<Note> {

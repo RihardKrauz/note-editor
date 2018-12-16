@@ -11,6 +11,7 @@ import { RemoveNote, RestoreNote } from 'src/app/store/notes.actions';
 })
 export class NoteCardComponent implements OnInit {
   @Input() model: Note;
+  @Input() editMode: boolean;
   constructor(private store: Store<GlobalState>) {}
 
   ngOnInit() {}

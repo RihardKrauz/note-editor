@@ -1,3 +1,16 @@
-Note {{model.title}} {{model.isRemoved}}
-<button (click)="removeNote($event)">remove</button>
-<button (click)="restoreNote($event)">restore</button>
+<div class="note-card">
+    <div class="card-content">
+        <ng-container *ngIf="editMode === false">
+                <section>{{model.title}}</section>
+                <p>{{model.content}}</p>
+        </ng-container>
+        <ng-container *ngIf="editMode === true">
+                <section>{{model.title}}</section>
+                <p>{{model.content}}</p>
+        </ng-container>
+        <div class="card-footer">
+            <button mat-raised-button color="warn" *ngIf="model.isRemoved === false" (click)="removeNote($event)">remove</button>
+            <button mat-raised-button color="accent" *ngIf="model.isRemoved === true" (click)="restoreNote($event)">restore</button>
+        </div>
+    </div>
+</div>

@@ -26,6 +26,17 @@ export function NotesReducer(state = INITIAL_STATE, action: NoteAction<any>) {
         notesToRestore[0].isRemoved = false;
       }
       return { ...state, items: notes };
+    case NotesActionTypes.Sync:
+      const storedItemsJson = localStorage.getItem('notes');
+      let sharedData = { ...state };
+      if (storedItemsJson) {
+        try {
+          sharedData = JSON.parse(storedItemsJson);
+        } catch (ex) {
+          throw new Error('JSON parse error of localStorage store data');
+        }
+      }
+      return { ...state, items: sharedData.items };
     default:
       return state;
   }

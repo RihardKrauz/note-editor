@@ -1,6 +1,11 @@
-<input [(ngModel)]="filterValue" />
+<div>
+  <label>Отфильтруйте заметки</label>
+  <mat-form-field>
+    <input [(ngModel)]="filterValue" matInput placeholder="Название">
+  </mat-form-field>
+</div>
 <ul>
   <li *ngFor="let note of notes$ | async | titleFilter:filterValue">
-    <app-note-card [model]="note"></app-note-card>
+    <app-note-card [model]="note" [editMode]="false"></app-note-card>
   </li>
 </ul>

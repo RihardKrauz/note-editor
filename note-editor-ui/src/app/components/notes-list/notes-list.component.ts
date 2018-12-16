@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Note } from 'src/app/models/note';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GlobalState } from 'src/app/store/state';
-import { FetchNotes } from 'src/app/store/notes.actions';
+import { FetchNotes, SyncNotes } from 'src/app/store/notes.actions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-notes-list',
@@ -19,5 +20,9 @@ export class NotesListComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new FetchNotes());
+
+    interval(environment.syncTime || 2000).subscribe(() => {
+      this.store.dispatch(new SyncNotes());
+    });
   }
 }

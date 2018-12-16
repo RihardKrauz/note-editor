@@ -8,17 +8,26 @@ import { NotesViewComponent } from './components/notes-view/notes-view.component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotesLayoutComponent } from './components/notes-layout/notes-layout.component';
 
-import { MatCardModule, MatButtonModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NotesListComponent } from './components/notes-list/notes-list.component';
 import { NoteCardComponent } from './components/note-card/note-card.component';
 import { TitleFilterPipe } from './pipes/title-filter.pipe';
 import { FormsModule } from '@angular/forms';
 
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
 import { NotesReducer } from './store/notes.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { NotesEffects } from './store/notes.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { GlobalState } from './store/state';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+const reducers: ActionReducerMap<GlobalState> = { notes: NotesReducer };
+
+export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+  return localStorageSync({ keys: ['notes'] })(reducer);
+}
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -35,8 +44,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     AppRoutingModule,
     MatCardModule,
     MatButtonModule,
+    MatInputModule,
     FormsModule,
-    StoreModule.forRoot({ notes: NotesReducer }),
+    MatFormFieldModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([NotesEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
