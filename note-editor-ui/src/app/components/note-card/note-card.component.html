@@ -1,1 +1,3 @@
-Note {{model.title}}
+Note {{model.title}} {{model.isRemoved}}
+<button (click)="removeNote($event)">remove</button>
+<button (click)="restoreNote($event)">restore</button>

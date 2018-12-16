@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NotesInteractionService } from '../../services/notes-interaction.service';
 import { Note } from 'src/app/models/note';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { GlobalState } from 'src/app/store/state';
+import { FetchNotes } from 'src/app/store/notes.actions';
 
 @Component({
   selector: 'app-notes-list',
@@ -9,10 +11,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./notes-list.component.less']
 })
 export class NotesListComponent implements OnInit {
+  filterValue: string;
   notes$: Observable<Note[]>;
-  constructor(private notesInteractionService: NotesInteractionService) {}
+  constructor(private store: Store<GlobalState>) {
+    this.notes$ = this.store.select(state => state.notes.items);
+  }
 
   ngOnInit() {
-    this.notes$ = this.notesInteractionService.getNotes();
+    this.store.dispatch(new FetchNotes());
   }
 }

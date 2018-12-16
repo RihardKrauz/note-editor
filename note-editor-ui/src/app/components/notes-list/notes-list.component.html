@@ -1,5 +1,6 @@
+<input [(ngModel)]="filterValue" />
 <ul>
-  <li *ngFor="let note of notes$ | async">
+  <li *ngFor="let note of notes$ | async | titleFilter:filterValue">
     <app-note-card [model]="note"></app-note-card>
   </li>
 </ul>

@@ -11,10 +11,37 @@ import { NotesLayoutComponent } from './components/notes-layout/notes-layout.com
 import { MatCardModule, MatButtonModule } from '@angular/material';
 import { NotesListComponent } from './components/notes-list/notes-list.component';
 import { NoteCardComponent } from './components/note-card/note-card.component';
+import { TitleFilterPipe } from './pipes/title-filter.pipe';
+import { FormsModule } from '@angular/forms';
+
+import { StoreModule } from '@ngrx/store';
+import { NotesReducer } from './store/notes.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { NotesEffects } from './store/notes.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
-  declarations: [AppComponent, NotesViewComponent, NotesLayoutComponent, NotesListComponent, NoteCardComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, MatCardModule, MatButtonModule],
+  declarations: [
+    AppComponent,
+    NotesViewComponent,
+    NotesLayoutComponent,
+    NotesListComponent,
+    NoteCardComponent,
+    TitleFilterPipe
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    MatCardModule,
+    MatButtonModule,
+    FormsModule,
+    StoreModule.forRoot({ notes: NotesReducer }),
+    EffectsModule.forRoot([NotesEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25
+    })
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Note } from '../models/note';
 import { of } from 'rxjs';
-import { NoteFolder } from '../models/note-folder';
 
 const NOTES: Note[] = [
   {
