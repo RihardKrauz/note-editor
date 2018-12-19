@@ -1,3 +1,4 @@
 <h2>Список заметок</h2>
-<app-notes-list></app-notes-list>
+<app-notes-list [sessionId]="sessionId"></app-notes-list>
 <h2>Добавить заметку</h2>
+<app-note-card [model]="editableNote" [editMode]="true"></app-note-card>

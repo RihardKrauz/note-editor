@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  syncTime: 1000
+  syncTime: 2000
 };
 
 /*

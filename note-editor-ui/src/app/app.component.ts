@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'note-editor-ui';
+  title = 'Редактор заметок';
+  sessionId: string;
+
+  constructor() {}
 }

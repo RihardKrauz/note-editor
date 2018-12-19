@@ -1,5 +1,6 @@
-import { NotesState } from './state';
+import { NotesState } from '../state';
 import { NotesActionTypes, NoteAction } from './notes.actions';
+import { SyncActionTypes } from '../sync/sync.actions';
 
 const INITIAL_STATE: NotesState = {
   items: []
@@ -26,14 +27,14 @@ export function NotesReducer(state = INITIAL_STATE, action: NoteAction<any>) {
         notesToRestore[0].isRemoved = false;
       }
       return { ...state, items: notes };
-    case NotesActionTypes.Sync:
+    case SyncActionTypes.Synchronize:
       const storedItemsJson = localStorage.getItem('notes');
       let sharedData = { ...state };
       if (storedItemsJson) {
         try {
           sharedData = JSON.parse(storedItemsJson);
         } catch (ex) {
-          throw new Error('JSON parse error of localStorage store data');
+          throw new Error('JSON parse error of localStorage store data in notes');
         }
       }
       return { ...state, items: sharedData.items };

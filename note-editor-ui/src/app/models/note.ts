@@ -1,6 +1,3 @@
 export class Note {
-  id: number;
-  title: string;
-  content: string;
-  isRemoved: boolean;
+  constructor(public id?: number, public title?: string, public content?: string, public isRemoved?: boolean) {}
 }

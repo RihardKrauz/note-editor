@@ -1,11 +1,21 @@
 <div>
   <label>Отфильтруйте заметки</label>
   <mat-form-field>
-    <input [(ngModel)]="filterValue" matInput placeholder="Название">
+    <input
+      (change)="onFilterChange($event.target.value)"
+      (focus)="onFilterFocus()"
+      (blur)="onFilterBlur()"
+      [(ngModel)]="filterValue"
+      matInput
+      placeholder="Название">
   </mat-form-field>
+    <mat-checkbox
+      (change)="onRemovedChange($event)"
+      [labelPosition]="'before'"
+      [(ngModel)]="showRemoved">Показать удаленные</mat-checkbox>
 </div>
 <ul>
-  <li *ngFor="let note of notes$ | async | titleFilter:filterValue">
+  <li *ngFor="let note of notes$ | async | titleFilter:filterValue | removedFilter:showRemoved ">
     <app-note-card [model]="note" [editMode]="false"></app-note-card>
   </li>
 </ul>

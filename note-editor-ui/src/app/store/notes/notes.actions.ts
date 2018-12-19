@@ -1,13 +1,12 @@
 import { Action } from '@ngrx/store';
-import { Note } from '../models/note';
+import { Note } from '../../models/note';
 
 export enum NotesActionTypes {
   Add = '[Notes] Add',
   Remove = '[Notes] Remove',
   Restore = '[Notes] Restore',
   Fetch = '[Notes] Fetch',
-  FetchSuccess = '[Notes] FetchSuccess',
-  Sync = '[Notes] Sync'
+  FetchSuccess = '[Notes] FetchSuccess'
 }
 
 export interface NoteAction<T> extends Action {
@@ -21,10 +20,6 @@ export class FetchNotes implements NoteAction<undefined> {
 export class FetchNotesSuccess implements NoteAction<Note[]> {
   readonly type = NotesActionTypes.FetchSuccess;
   constructor(public payload: Note[]) {}
-}
-
-export class SyncNotes implements NoteAction<undefined> {
-  readonly type = NotesActionTypes.Sync;
 }
 
 export class AddNote implements NoteAction<Note> {

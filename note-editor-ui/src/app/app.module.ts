@@ -8,24 +8,41 @@ import { NotesViewComponent } from './components/notes-view/notes-view.component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotesLayoutComponent } from './components/notes-layout/notes-layout.component';
 
-import { MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatCheckboxModule
+} from '@angular/material';
 import { NotesListComponent } from './components/notes-list/notes-list.component';
 import { NoteCardComponent } from './components/note-card/note-card.component';
 import { TitleFilterPipe } from './pipes/title-filter.pipe';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule, ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
-import { NotesReducer } from './store/notes.reducer';
+import { NotesReducer } from './store/notes/notes.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { NotesEffects } from './store/notes.effects';
+import { NotesEffects } from './store/notes/notes.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { GlobalState } from './store/state';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { FilterReducer } from './store/filters/filters.reducers';
+import { RemovedFilterPipe } from './pipes/removed-filter.pipe';
+import { EditFormReducer } from './store/edit-form/edit-form.reducer';
+import { UserReducer } from './store/user/user.reducer';
 
-const reducers: ActionReducerMap<GlobalState> = { notes: NotesReducer };
+const reducers: ActionReducerMap<GlobalState> = {
+  notes: NotesReducer,
+  filter: FilterReducer,
+  editForm: EditFormReducer,
+  userState: UserReducer
+};
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({ keys: ['notes'] })(reducer);
+  return localStorageSync({
+    keys: ['notes', 'filter', 'editForm', 'userState']
+  })(reducer);
 }
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
@@ -36,7 +53,8 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     NotesLayoutComponent,
     NotesListComponent,
     NoteCardComponent,
-    TitleFilterPipe
+    TitleFilterPipe,
+    RemovedFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -45,7 +63,9 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     MatCardModule,
     MatButtonModule,
     MatInputModule,
+    MatCheckboxModule,
     FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([NotesEffects]),

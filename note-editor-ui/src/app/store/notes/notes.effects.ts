@@ -1,10 +1,10 @@
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { NotesActionTypes, FetchNotesSuccess } from './notes.actions';
 import { Injectable } from '@angular/core';
-import { NotesInteractionService } from '../services/notes-interaction.service';
+import { NotesInteractionService } from '../../services/notes-interaction.service';
 import { mergeMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { NotesState } from './state';
+import { NotesState } from '../state';
 
 @Injectable()
 export class NotesEffects {
